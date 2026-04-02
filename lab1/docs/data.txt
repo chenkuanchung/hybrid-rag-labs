@@ -1,7 +1,5 @@
-Alice works_at Acme.
-Bob works_at Acme.
-Acme produces RocketSkates.
-Acme partners_with BoltCorp.
-BoltCorp supplies TurboMotor to Acme.
-Carol works_at BoltCorp.
-Carol leads TurboMotor.
+Acme 是一家科技公司，旗下主力產品為 RocketSkates，主要應用於個人移動載具領域。目前 Alice 和 Bob 都在 Acme 工作，Alice 主要負責研發排程，Bob 則協助行銷與法務對接。
+
+Acme 與 BoltCorp 建立了正式的策略聯盟夥伴關係，雙方在零組件採購與技術合作上有長期合約。BoltCorp 負責供應 TurboMotor 馬達模組給 Acme，這是 RocketSkates 的核心動力元件。若 TurboMotor 交期延後，Acme 的組裝產線將面臨停擺風險。
+
+Carol 任職於 BoltCorp，她是 TurboMotor 專案的產品負責人，負責該產品從研發到出貨的整體協調。Carol 經常與 Acme 端的窗口溝通交期與良率問題，確保供應鏈順暢運作。

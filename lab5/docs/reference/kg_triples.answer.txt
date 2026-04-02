@@ -1,0 +1,27 @@
+# 參考答案：由本 Lab 語料可整理出的三元組（與 Lab 2 匯入文法相同）
+# 教師自評或學生對答案用；正式課程可僅提供紙本／LMS，不放入學生版 repo。
+
+Alice works_at Acme.
+Bob works_at Acme.
+Grace works_at Acme.
+Carol works_at BoltCorp.
+Dave works_at ZenithAuto.
+Eva works_at NovaChip.
+Frank works_at PacificLogistics.
+Henry works_at GreenCellEnergy.
+Acme produces RocketSkates.
+ZenithAuto produces FleetOS.
+NovaChip produces NanoSensor.
+GreenCellEnergy produces SmartBatteryPack.
+Acme partners_with BoltCorp.
+Acme partners_with ZenithAuto.
+BoltCorp partners_with NovaChip.
+ZenithAuto partners_with PacificLogistics.
+BoltCorp supplies TurboMotor to Acme.
+NovaChip supplies NanoSensor to Acme.
+PacificLogistics supplies SmartBatteryPack to ZenithAuto.
+GreenCellEnergy supplies SmartBatteryPack to BoltCorp.
+Carol leads TurboMotor.
+Dave leads FleetOS.
+Eva leads NanoSensor.
+Grace leads RocketSkates.

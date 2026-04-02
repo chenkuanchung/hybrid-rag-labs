@@ -1,0 +1,13 @@
+工單 #44821｜已結案｜權限／帳號
+描述：無法開啟內部「供應鏈與聯盟關係」wiki。
+處理：群組政策延遲同步。該頁摘要含：何者供應 TurboMotor 給 Acme、何者供應 NanoSensor 給 Acme、PacificLogistics 與 ZenithAuto 的履約角色等；若仍異常請清快取。
+
+事故 #T-2024-103｜低嚴重度
+摘要：測試機誤用正式 API key。聲明：與 NovaChip 供應 NanoSensor 給 Acme 的整合測試無關，亦未影響 TurboMotor 相關服務。
+
+內部 FAQ（草稿）
+問：客戶同時問 RocketSkates 與 FleetOS？
+答：RocketSkates 屬 Acme 產品；FleetOS 屬 ZenithAuto 產品。兩公司為策略夥伴，可開聯合工單，Acme 可找 Alice 或 Grace，ZenithAuto 找 Dave。
+
+問：BoltCorp 與 NovaChip？
+答：兩者為策略合作夥伴；涉及 NanoSensor 量產供應給 Acme 時，仍以採購合約為準。

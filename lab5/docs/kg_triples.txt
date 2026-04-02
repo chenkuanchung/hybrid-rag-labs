@@ -1,0 +1,7 @@
+# ============================================================
+# Lab 5 三元組檔（供 ingest_graph.py 讀取）
+#
+# 建議流程：先執行 python extract_triples_from_corpus.py（需 vLLM）
+# 本檔會被覆寫；亦可手動增刪後再 python ingest_graph.py
+# 格式說明：kg_triples.template.txt｜參考答案：reference/kg_triples.answer.txt
+# ============================================================

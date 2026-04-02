@@ -1,0 +1,19 @@
+（郵件匯出摘錄，時間略經刪節）
+
+---
+寄件者：alice@acme.internal
+主旨：FleetOS POC 窗口
+內文：
+Dave，感謝補上簡報。Acme 與 ZenithAuto 既然是策略夥伴，我們傾向用現有 RocketSkates 場景做 POC。我會請 Grace 排資源——她負責 RocketSkates。另請務必副本 Carol：她在 BoltCorp，最熟悉 TurboMotor 產線；BoltCorp 供應 TurboMotor 給我們 Acme，延遲風險要請她一起評估。
+
+---
+寄件者：frank@pacificlogistics.internal
+主旨：ZenithAuto 倉別／電池模組入庫
+內文：
+各位，本批為 PacificLogistics 對 ZenithAuto 的 SmartBatteryPack 履約；承運商提早刷「已抵倉」造成誤會，實際尚未上架。Henry 那邊 GreenCellEnergy 的出貨文件我們已核對。另提醒：GreenCellEnergy 供應給 BoltCorp 的 SmartBatteryPack 走不同合約編號，請勿混倉。
+
+---
+寄件者：eva@novachip.internal
+主旨：NanoSensor 樣品與量產分流
+內文：
+Acme 研發索取的第二組 NanoSensor 樣品已寄出。量產路線上，NovaChip 供應 NanoSensor 給 Acme。若 BoltCorp 產線也要規格書，請走正式採購；BoltCorp 與 NovaChip 雖有策略合作，樣品與合約供應請分開單據。

@@ -1,0 +1,21 @@
+# Lab 5 三元組格式範本（通常由 extract_triples_from_corpus.py 產生 kg_triples.txt；手改時請符合下列文法）
+#
+# 規則：每行一句、句尾必須是英文句點 . ；頭尾實體名稱需與語料一致（大小寫亦同）。
+# 節點類型由匯入程式依關係推定，與 Lab 2 相同。
+#
+# --- 五種合法句式（請刪除本註解區後，寫入你從 corpus 抽出的句子）---
+
+# 人 任職 公司
+# Alice works_at Acme.
+
+# 公司 生產 產品
+# Acme produces RocketSkates.
+
+# 公司 與 公司 策略聯盟
+# Acme partners_with BoltCorp.
+
+# 公司 供應「品項」給 公司（品項寫在中間）
+# BoltCorp supplies TurboMotor to Acme.
+
+# 人 負責（主導）產品
+# Carol leads TurboMotor.

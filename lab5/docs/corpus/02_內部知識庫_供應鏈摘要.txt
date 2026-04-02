@@ -1,0 +1,21 @@
+# 供應鏈與組織（內部知識庫摘錄｜同仁自行維護）
+
+> 若與採購系統不一致，以合約與 ERP 為準。本頁用條列整理，方便新人快速了解「誰在哪裡、誰做什麼產品」。
+
+## 人事與任職公司
+Alice、Bob、Grace 任職於 Acme。Carol 任職於 BoltCorp。Dave 任職於 ZenithAuto。Eva 任職於 NovaChip。Frank 任職於 PacificLogistics。Henry 任職於 GreenCellEnergy。
+
+## 各公司主力產品
+Acme 的主力產品為 RocketSkates。ZenithAuto 推出車載平台產品 FleetOS。NovaChip 的主力為感測模組 NanoSensor。GreenCellEnergy 生產智慧電池模組 SmartBatteryPack。
+
+## 產品負責人（對內窗口）
+Grace 負責 RocketSkates。Carol 負責 TurboMotor。Dave 負責 FleetOS。Eva 負責 NanoSensor。
+
+## 公司間策略聯盟
+Acme 與 BoltCorp 為策略夥伴。Acme 與 ZenithAuto 為策略夥伴。BoltCorp 與 NovaChip 有策略合作。ZenithAuto 與 PacificLogistics 為策略夥伴。
+
+## 供應與履約（採購／倉儲關鍵資訊）
+BoltCorp 將 TurboMotor 供應給 Acme。NovaChip 將 NanoSensor 供應給 Acme。PacificLogistics 將 SmartBatteryPack 配送並供應給 ZenithAuto（入倉欄位常與 Frank 團隊交接）。GreenCellEnergy 將 SmartBatteryPack 供應給 BoltCorp；出貨單據上常出現 Henry 所屬公司的抬頭。
+
+## 常見口語誤區
+同仁口頭常說「我們跟誰合作」，但對外簡報應區分「策略聯盟」與「單向供應關係」，避免聽眾以為供應方向可互換。

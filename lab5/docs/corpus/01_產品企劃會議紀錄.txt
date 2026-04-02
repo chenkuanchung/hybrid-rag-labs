@@ -1,0 +1,12 @@
+【內部文件｜產品企劃週會｜2024-11-07｜草稿】
+與會者遲到，實際討論延至 14:20。Acme 方面 Alice、Bob、Grace 均有出席。
+
+議題一：RocketSkates
+會中確認 RocketSkates 為 Acme 的主力產品線。Grace 負責該產品的對外窗口與內部協調；Alice 補充研發排程緊。Bob 提醒：Acme 與 BoltCorp 除了採購零組件，還有正式的策略聯盟（法務以合約登記），行銷對外說法需與法務對齊。
+
+議題二：TurboMotor 交期
+Carol 自 BoltCorp 與會，說明該公司產線上週良率波動已追蹤。TurboMotor 由 BoltCorp 出貨給 Acme 使用；Carol 本人是 TurboMotor 專案的產品負責人。若交期延後，Acme 組裝線目前仍可支撐對外 demo，但建議保留約一週緩衝。
+
+補充：Acme 正與 ZenithAuto 商談 FleetOS 展示場景，兩家公司為策略夥伴關係。ZenithAuto 端的聯絡人為 Dave。
+
+雜項：停車場 B2 本週五封閉施工。

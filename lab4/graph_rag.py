@@ -1,8 +1,9 @@
-import os, json, networkx as nx
+import os, re
+from pathlib import Path
+
 from langchain_openai import ChatOpenAI
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from neo4j import GraphDatabase
 
 # ------- env & clients -------
@@ -11,9 +12,10 @@ os.environ["OPENAI_API_BASE"]="http://localhost:8000/v1"
 LLM_MODEL="Qwen/Qwen1.5-7B-Chat"
 llm = ChatOpenAI(model=LLM_MODEL, temperature=0.2)
 
-# Vector store
+# Vector store（與 Lab 1 相同索引：SemanticChunker 建於 lab1/chroma_store）
 emb = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
-vectordb = Chroma(persist_directory="chroma_store", embedding_function=emb)
+_chroma_dir = Path(__file__).resolve().parent.parent / "lab1" / "chroma_store"
+vectordb = Chroma(persist_directory=str(_chroma_dir), embedding_function=emb)
 
 # Neo4j
 driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j","password123"))
@@ -23,9 +25,8 @@ def candidate_entities(question:str, k:int=4):
     docs = vectordb.similarity_search(question, k=k)
     ent=set()
     for d in docs:
-        for tok in d.page_content.split():
-            if tok[0].isupper():  # Very naive
-                ent.add(tok.strip('.'))
+        for tok in re.findall(r'[A-Z][A-Za-z]+', d.page_content):
+            ent.add(tok)
     return list(ent)[:5]
 
 def graph_expand(ents, hop=2):
