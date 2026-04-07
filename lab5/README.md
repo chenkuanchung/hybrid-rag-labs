@@ -63,6 +63,32 @@ python graph_rag.py
 | 聯盟關係 | Acme 與哪些公司是 partners_with？ |
 | 自我檢核 | 與 `reference/kg_triples.answer.txt` 比對你漏寫或寫錯的邊 |
 
+## 程式填空（TODO）
+
+Lab 5 有多個檔案包含 `TODO`，共 5 個需要你完成：
+
+### `extract_triples_from_corpus.py`
+
+| TODO | 要完成的事 | 提示 |
+|------|-----------|------|
+| TODO 1 | 撰寫 `EXTRACTION_PROMPT` | 設計一個 prompt 讓 LLM 從繁中語料中抽取五種句式的三元組。可參考 `docs/kg_triples.template.txt` 了解合法格式。記得保留 `__CORPUS__` 佔位符 |
+| TODO 2 | 實作 `filter_parsable()` | 對每行呼叫 `parse()` 判斷是否合法，合法且未重複的放入 `good`，不合法的放入 `bad` |
+
+### `build_vector_index.py`
+
+| TODO | 要完成的事 | 提示 |
+|------|-----------|------|
+| TODO 3 | 建立 SemanticChunker 並存入 Chroma | 與 Lab 1 相同做法：建立 `SemanticChunker` → `split_documents()` → `Chroma.from_documents()` |
+
+### `graph_rag.py`
+
+| TODO | 要完成的事 | 提示 |
+|------|-----------|------|
+| TODO 4 | 實作 `candidate_entities()` | 與 Lab 4 相同邏輯，但 `k=6`、回傳上限 8 個實體 |
+| TODO 5 | 實作 `graph_expand()` | 與 Lab 4 相同邏輯，但 `LIMIT 120` |
+
+建議按照「建議操作順序」依序完成並測試。
+
 ## 作業建議
 
 1. **對齊參考答案**：將 `extract_triples_from_corpus.py` 產生的 `kg_triples.txt` 與 `reference/kg_triples.answer.txt` 比對（可用 diff）；列出**漏抽**與**多抽**各至少一則，並說明可能原因（提示詞、模型、語意模糊）。  

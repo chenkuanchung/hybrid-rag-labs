@@ -16,22 +16,22 @@ EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 # 1) 載入文件：以與索引相同的 embedding 做語意斷句（全系列 Lab 共用此策略）
 docs = TextLoader("docs/data.txt", encoding="utf-8").load()
 emb = HuggingFaceEmbeddings(model_name=EMBED_MODEL)
-splitter = SemanticChunker(
-    emb,
-    breakpoint_threshold_type="percentile",
-    breakpoint_threshold_amount=90,
-)
-splits = splitter.split_documents(docs)
+# TODO 1: 建立 SemanticChunker
+# 使用 emb 作為 embedding，breakpoint_threshold_type="percentile"，breakpoint_threshold_amount=90
+# 然後呼叫 split_documents(docs) 取得切分結果
+splitter = None  # <-- 請替換這行
+splits = []      # <-- 請替換這行
 print(f"SemanticChunker：{len(splits)} 個 chunk")
 
 # 2) Embedding + VectorStore
-vectordb = Chroma.from_documents(splits, emb, persist_directory="chroma_store")
+# TODO 2: 使用 Chroma.from_documents() 建立向量資料庫
+# 參數：splits, emb, persist_directory="chroma_store"
+vectordb = None  # <-- 請替換這行
 
 # 3) 建立 RAG Chain
-qa = RetrievalQA.from_chain_type(
-    llm, retriever=vectordb.as_retriever(k=4),
-    chain_type="stuff"
-)
+# TODO 3: 使用 RetrievalQA.from_chain_type() 建立 RAG Chain
+# 參數：llm, retriever=vectordb.as_retriever(k=4), chain_type="stuff"
+qa = None  # <-- 請替換這行
 
 while True:
     q = input("提問 (enter 離開)：")

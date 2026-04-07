@@ -66,7 +66,21 @@ python graph_rag.py
 | TurboMotor 的負責人在哪間公司？ | 需要多跳：TurboMotor → Carol → BoltCorp |
 | Acme 的供應鏈是怎樣的？ | 向量找到相關實體 → 圖譜擴展出完整供應鏈 |
 
+## 程式填空（TODO）
+
+`graph_rag.py` 中有 3 個 `TODO` 需要你完成：
+
+| TODO | 要完成的事 | 提示 |
+|------|-----------|------|
+| TODO 1 | 實作 `candidate_entities()` | 使用 `vectordb.similarity_search()` 取得相關文件，再用 `re.findall(r'[A-Z][A-Za-z]+', ...)` 提取候選實體名稱，收集到 `set` 去重後回傳前 5 個 |
+| TODO 2 | 實作 `graph_expand()` | 撰寫 Cypher 做 variable-length path 查詢（`[*1..{hop}]`），執行後從 `r["p"].relationships` 中提取三元組字串 |
+| TODO 3 | 撰寫 `answer_with_graph()` 的 prompt | 將圖譜三元組作為上下文，設定角色為「企業知識專家」，要求只根據圖譜回答、資訊不足時說明 |
+
+完成後執行 `python graph_rag.py`，嘗試問「TurboMotor 的負責人在哪間公司？」測試多跳推理。
+
 ## 作業
+
+完成上述 TODO 並確認程式可執行後，請繼續以下練習：
 
 1. **觀察候選實體**：程式會印出「候選實體」，觀察不同問題產生的候選實體是否合理。目前使用正則抓取「大寫英文詞」作為實體辨識的方式有什麼缺陷？提出至少一種改進方案。
 2. **調整參數**：

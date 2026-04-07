@@ -56,9 +56,11 @@ MATCH (n)-[r]->(m) RETURN n, r, m
 
 ## 作業
 
-1. 在 `docs/data.txt` 新增一種新關係（例如 `Dave manages Bob.`），並在 `PATTERNS` 中加入對應的正則表達式與標籤，驗證能否成功匯入。
-2. 在 Neo4j Browser 中練習以下 Cypher 查詢，並記錄結果：
+本 Lab 的程式 `ingest_graph.py` 已完整提供，請先**閱讀程式碼**理解每個函式的作用，再執行 `python ingest_graph.py` 完成匯入。確認成功後，完成以下練習：
+
+1. **擴充關係類型**：在 `docs/data.txt` 新增一種新關係（例如 `Dave manages Bob.`），並在 `PATTERNS` 中加入對應的正則表達式與標籤，驗證能否成功匯入。
+2. **練習 Cypher 查詢**：在 Neo4j Browser（http://localhost:7474）中執行以下查詢，並記錄結果：
    - 查詢所有在 Acme 工作的人：`MATCH (p:Person)-[:WORKS_AT]->(c:Company {name:'Acme'}) RETURN p.name`
    - 查詢 BoltCorp 供應了什麼給 Acme：`MATCH (b:Company {name:'BoltCorp'})-[r:SUPPLIES]->(a:Company {name:'Acme'}) RETURN r.item`
-   - 查詢 Carol 到 Acme 之間的所有路徑：`MATCH p=shortestPath((c:Person {name:'Carol'})-[*]-(a:Company {name:'Acme'})) RETURN p`
-3. 思考題：目前的解析方式使用正則表達式，這有什麼限制？如果要處理更複雜的自然語言描述（例如「Alice 自 2023 年起在 Acme 的研發部門擔任工程師」），你會怎麼改進？
+   - 查詢 Carol 到 Acme 之間的最短路徑：`MATCH p=shortestPath((c:Person {name:'Carol'})-[*]-(a:Company {name:'Acme'})) RETURN p`
+3. **思考題**：目前的解析方式使用正則表達式，這有什麼限制？如果要處理更複雜的自然語言描述（例如「Alice 自 2023 年起在 Acme 的研發部門擔任工程師」），你會怎麼改進？

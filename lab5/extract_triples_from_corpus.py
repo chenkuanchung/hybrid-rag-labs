@@ -19,30 +19,17 @@ os.environ["OPENAI_API_KEY"] = "EMPTY"
 os.environ["OPENAI_API_BASE"] = "http://localhost:8000/v1"
 LLM_MODEL = "Qwen/Qwen1.5-7B-Chat"
 
-EXTRACTION_PROMPT = """你是知識圖譜抽取助手。下列為企業內部多份文件（繁體中文為主，專有名詞為英文）。
-請從中抽取**所有可確定**的人事、產品、供應與合作關係，輸出為**純英文句子**，每行一句，句尾必須是英文句點 . 
-
-**只允許**以下五種句式（頭尾實體名稱需與原文一致，含大小寫）：
-
-1. PersonName works_at CompanyName.
-2. CompanyName produces ProductName.
-3. CompanyName partners_with CompanyName.
-4. CompanyName supplies ItemName to CompanyName.
-5. PersonName leads ProductName.
-
-規則：
-- 不要輸出編號、說明、markdown、空行。
-- 不要推測文件未明確支持的事實。
-- 「策略聯盟／策略夥伴／策略合作」對應 partners_with（僅限**公司對公司**）。
-- 「供應／出貨給／供應給」且涉及具體品項時，用 supplies 句式（供應方 supplies 品項 to 接收方）。
-- 「負責某產品」對應 leads（人 leads 產品）。
-
---- 文件內容 ---
+# TODO 1: 撰寫 EXTRACTION_PROMPT — 讓 LLM 從語料中抽取三元組
+# 這個 prompt 需要：
+#   - 說明角色（知識圖譜抽取助手）
+#   - 列出五種合法句式：works_at, produces, partners_with, supplies...to, leads
+#   - 設定規則：只輸出純英文句子、不推測、不加編號說明
+#   - 在適當位置放入 __CORPUS__（稍後會被語料內容取代）
+#   - 提供中文關鍵詞到英文關係的對應提示（例如「策略聯盟」→ partners_with）
+# 可參考 docs/kg_triples.template.txt 了解五種句式的格式
+EXTRACTION_PROMPT = """
 __CORPUS__
---- 結束 ---
-
-請只輸出符合上述格式的句子，每行一句：
-"""
+"""  # <-- 請擴充這個 prompt
 
 
 def load_corpus() -> str:
@@ -81,16 +68,14 @@ def extract_raw_lines(llm_text: str) -> list[str]:
 
 
 def filter_parsable(lines: list[str]) -> tuple[list[str], list[str]]:
+    # TODO 2: 過濾出可被 parse() 解析的行，同時去重
+    # 步驟：
+    #   1. 對每一行呼叫 parse(line)（已從 triples_parse 匯入）
+    #   2. 若 parse 回傳非 None 且該行尚未出現過 → 加入 good
+    #   3. 若 parse 回傳 None → 加入 bad
+    #   4. 回傳 (good, bad) 兩個 list
     good, bad = [], []
-    seen = set()
-    for line in lines:
-        if parse(line):
-            if line not in seen:
-                seen.add(line)
-                good.append(line)
-        else:
-            bad.append(line)
-    return good, bad
+    return good, bad  # <-- 請實作過濾邏輯
 
 
 def main() -> None:

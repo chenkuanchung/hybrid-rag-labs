@@ -22,7 +22,44 @@ LLM 根據檢索到的片段生成答案
 
 請先安裝：`pip install langchain-experimental`（並具備與 `HuggingFaceEmbeddings` 相關的依賴，例如 `sentence-transformers`）。
 
-可調整 `vector_rag.py` 中的 `breakpoint_threshold_amount`（例如 85～95）：數值愈高通常每塊愈長、chunk 數愈少。
+### SemanticChunker 參數說明
+
+```python
+from langchain_experimental.text_splitter import SemanticChunker
+
+splitter = SemanticChunker(
+    embeddings,                        # Embeddings 物件（例如 HuggingFaceEmbeddings 實例）
+    breakpoint_threshold_type="...",   # 斷點判斷方式（見下表）
+    breakpoint_threshold_amount=90,    # 門檻值（搭配 type 使用）
+)
+```
+
+| 參數 | 型別 | 說明 |
+|------|------|------|
+| `embeddings` | `Embeddings` | 用來計算語意相似度的 embedding 模型實例 |
+| `breakpoint_threshold_type` | `str` | 斷點策略：`"percentile"`（百分位數）、`"standard_deviation"`（標準差）、`"interquartile"`（四分位距）、`"gradient"`（梯度） |
+| `breakpoint_threshold_amount` | `float` | 門檻值。以 `"percentile"` 為例，`90` 表示只在語意差異超過第 90 百分位的位置切分 |
+
+### 使用範例
+
+```python
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_experimental.text_splitter import SemanticChunker
+
+emb = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+
+splitter = SemanticChunker(
+    emb,
+    breakpoint_threshold_type="percentile",
+    breakpoint_threshold_amount=90,
+)
+
+# docs 是由 TextLoader 載入的 Document 列表
+splits = splitter.split_documents(docs)
+print(f"切成 {len(splits)} 個 chunk")
+```
+
+> **提示**：`breakpoint_threshold_amount` 數值愈高，切分門檻愈嚴格 → 每塊愈長、chunk 數愈少。可嘗試 80～95 觀察差異。
 
 ## 資料檔案 — `docs/data.txt`
 
@@ -52,9 +89,23 @@ python vector_rag.py
 - `Acme 生產什麼？`
 - `誰負責 TurboMotor？`
 
+## 程式填空（TODO）
+
+`vector_rag.py` 中有 3 個 `TODO` 需要你完成：
+
+| TODO | 要完成的事 | 提示 |
+|------|-----------|------|
+| TODO 1 | 建立 `SemanticChunker` 並切分文件 | 參考上方「SemanticChunker 參數說明」與「使用範例」，傳入 `emb` 與門檻參數後呼叫 `split_documents(docs)` |
+| TODO 2 | 建立 Chroma 向量資料庫 | `Chroma.from_documents(splits, emb, persist_directory="chroma_store")` |
+| TODO 3 | 建立 RAG Chain | `RetrievalQA.from_chain_type(llm, retriever=vectordb.as_retriever(k=4), chain_type="stuff")` |
+
+完成後執行 `python vector_rag.py`，若能進入互動問答模式即代表 TODO 全數正確。
+
 ## 作業
 
-1. 修改 `breakpoint_threshold_amount`（例如 80、90、95），觀察印出的 chunk 數量與回答品質。嘗試回答：語意切分與「固定字元長度」切分各適合什麼情境？
-2. 在 `docs/data.txt` 新增一段描述（例如「Dave 任職於 BoltCorp，負責品管部門。」），重新執行程式，確認新資料能被正確檢索。
-3. 嘗試問一個**需要跨多筆資料推理**的問題（例如「Acme 的合作夥伴供應什麼零件？」），觀察純向量 RAG 是否能正確回答。記錄你的觀察，這將與後續 Graph RAG 做比較。
-4. 思考題：向量 RAG 的檢索方式是基於「語意相似度」，這在什麼情境下可能會失敗？
+完成上述 TODO 並確認程式可執行後，請繼續以下練習：
+
+1. **調參實驗**：修改你在 TODO 1 填入的 `breakpoint_threshold_amount`（嘗試 80、90、95），觀察印出的 chunk 數量與回答品質變化。思考：語意切分與「固定字元長度」切分各適合什麼情境？
+2. **新增資料**：在 `docs/data.txt` 新增一段描述（例如「Dave 任職於 BoltCorp，負責品管部門。」），重新執行程式，確認新資料能被正確檢索。
+3. **觀察限制**：嘗試問一個**需要跨多筆資料推理**的問題（例如「Acme 的合作夥伴供應什麼零件？」），觀察純向量 RAG 是否能正確回答。記錄你的觀察，這將與後續 Graph RAG 做比較。
+4. **思考題**：向量 RAG 的檢索方式是基於「語意相似度」，這在什麼情境下可能會失敗？

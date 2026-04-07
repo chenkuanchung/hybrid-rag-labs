@@ -1,5 +1,5 @@
 # 參考答案：由本 Lab 語料可整理出的三元組（與 Lab 2 匯入文法相同）
-# 教師自評或學生對答案用；正式課程可僅提供紙本／LMS，不放入學生版 repo。
+
 
 Alice works_at Acme.
 Bob works_at Acme.

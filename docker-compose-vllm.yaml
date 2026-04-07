@@ -1,6 +1,6 @@
 services:
   vllm_lab3:
-    image: vllm/vllm-openai:v0.14.0
+    image: vllm/vllm-openai:v0.10.2
     deploy:
       resources:
         reservations:
@@ -26,5 +26,5 @@ services:
       --host 0.0.0.0
       --port 8000
       --served-model-name Qwen2.5-3B-Instruct
-      --max-model-len 8192
+      --max-model-len 10240
       --kv-cache-dtype auto
