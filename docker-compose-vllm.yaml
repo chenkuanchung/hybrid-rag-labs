@@ -26,5 +26,7 @@ services:
       --host 0.0.0.0
       --port 8000
       --served-model-name Qwen2.5-3B-Instruct
-      --max-model-len 10240
+      --max-model-len 4096
       --kv-cache-dtype auto
+      -tp 1
+      --gpu-memory-utilization 0.6

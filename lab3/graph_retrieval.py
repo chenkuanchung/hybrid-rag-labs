@@ -1,23 +1,35 @@
-import os, json
+import json
 from typing import List
 from neo4j import GraphDatabase
-from langchain_openai import ChatOpenAI
-
-os.environ["OPENAI_API_KEY"]="EMPTY"
-os.environ["OPENAI_API_BASE"]="http://localhost:8000/v1"
-llm = ChatOpenAI(model="Qwen/Qwen1.5-7B-Chat", temperature=0)
+import requests
 
 driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j","password123"))
 
+def call_llm(messages):
+    data = {
+        "model": "Qwen2.5-3B-Instruct",
+        "messages": messages,
+        "temperature": 0.8,
+        "top_p": 0.6,
+        "stream": False,
+        "max_tokens": 1024
+    }
+    
+    response = requests.post("http://127.0.0.1:8299/v1/chat/completions", json=data)
+    response = response.json()
+    response_text = response["choices"][0]["message"]["content"]
+    return response_text
+
 def extract_entities(question:str)->List[str]:
-    prompt = f"""
-你是一位助手，請從使用者問題中找出人名、公司名或產品名，列成 Python list，不要包含重複或其他文字。
-問題：{question}
-回傳 JSON，例如：{{"entities":["Alice","Acme"]}}
-"""
-    resp = llm.invoke(prompt).content
+    system_prompt = "你是一位助手，請從使用者問題中找出人名、公司名或產品名，列成 Python list，不要包含重複或其他文字。回傳 JSON，例如：{\"entities\":[\"Alice\",\"Acme\"]}"
+    user_prompt = f"問題：{question}"
+    messages = [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ]
+    response = call_llm(messages)
     try:
-        data=json.loads(resp.strip())
+        data = json.loads(response.strip())
         return data.get("entities",[])
     except Exception:
         return []
@@ -39,14 +51,18 @@ def fetch_subgraph(entities:List[str], max_hop:int=2):
         return list(set(triples))
 
 def qa_graph(question:str):
-    ents=extract_entities(question)
-    triples=fetch_subgraph(ents)
+    entities=extract_entities(question)
+    triples=fetch_subgraph(entities)
     context="\n".join(triples) if triples else "（查無相關圖譜）"
     # TODO 2: 撰寫 prompt，將圖譜三元組（context）當作上下文，讓 LLM 根據這些關係回答問題
     # 提示：prompt 應包含：(1) 已知的圖譜關係 (2) 使用者的問題 (3) 要求 LLM 根據上下文回答
     prompt = ""  # <-- 請撰寫你的 prompt（用 f-string 嵌入 context 和 question）
-    answer=llm.invoke(prompt).content.strip()
-    return answer,triples
+    messages = [
+        {"role": "user", "content": prompt}
+    ]
+    response = call_llm(messages)
+    answer = response.strip()
+    return answer, triples
 
 if __name__=="__main__":
     while True:

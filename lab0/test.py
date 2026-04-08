@@ -4,9 +4,8 @@ from langchain_openai import ChatOpenAI
 
 # vLLM (OpenAI 端點)
 os.environ["OPENAI_API_KEY"]  = "EMPTY"
-os.environ["OPENAI_API_BASE"] = "http://localhost:8000/v1"
-
-llm = ChatOpenAI(model="Qwen/Qwen1.5-7B-Chat", temperature=0)
+os.environ["OPENAI_API_BASE"] = "http://localhost:8299/v1"
+llm = ChatOpenAI(model="Qwen2.5-3B-Instruct", temperature=0.2)
 print(llm.invoke("用一句話解釋何謂 RAG").content)
 
 # Neo4j 連線

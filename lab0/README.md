@@ -12,7 +12,7 @@
 | 服務 | 啟動方式 | 預設連線位址 |
 |------|----------|-------------|
 | Neo4j | `docker compose -f docker-compose-neo4j.yaml up -d` | bolt://localhost:7687 (帳號 `neo4j` / 密碼 `password123`) |
-| vLLM | `docker compose -f docker-compose-vllm.yaml up -d` | http://localhost:8000/v1 |
+| vLLM | `docker compose -f docker-compose-vllm.yaml up -d` | http://localhost:8299/v1 |
 
 > **提示**：請在專案根目錄執行上述指令。
 

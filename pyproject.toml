@@ -1,0 +1,16 @@
+[project]
+name = "ai-rookie-course3"
+version = "0.1.0"
+description = "2026 AI 新秀計畫 - GraphRAG 課程 Lab"
+requires-python = ">=3.12"
+dependencies = [
+    "neo4j",
+    "langchain",
+    "langchain-classic",
+    "langchain-openai",
+    "langchain-community",
+    "langchain-experimental",
+    "chromadb",
+    "sentence-transformers",
+    "tqdm",
+]

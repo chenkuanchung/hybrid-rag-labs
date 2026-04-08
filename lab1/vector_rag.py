@@ -1,15 +1,15 @@
 from langchain_community.document_loaders import TextLoader
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
-from langchain.chains import RetrievalQA
+from langchain_classic.chains import RetrievalQA
 from langchain_openai import ChatOpenAI
 from langchain_experimental.text_splitter import SemanticChunker
 import os
 
 # LLM 仍走本機 vLLM
 os.environ["OPENAI_API_KEY"]  = "EMPTY"
-os.environ["OPENAI_API_BASE"] = "http://localhost:8000/v1"
-llm = ChatOpenAI(model="Qwen/Qwen1.5-7B-Chat", temperature=0.2)
+os.environ["OPENAI_API_BASE"] = "http://localhost:8299/v1"
+llm = ChatOpenAI(model="Qwen2.5-3B-Instruct", temperature=0.2)
 
 EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 

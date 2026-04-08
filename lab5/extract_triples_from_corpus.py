@@ -16,8 +16,8 @@ CORPUS_DIR = LAB5 / "docs" / "corpus"
 DEFAULT_OUT = LAB5 / "docs" / "kg_triples.txt"
 
 os.environ["OPENAI_API_KEY"] = "EMPTY"
-os.environ["OPENAI_API_BASE"] = "http://localhost:8000/v1"
-LLM_MODEL = "Qwen/Qwen1.5-7B-Chat"
+os.environ["OPENAI_API_BASE"] = "http://localhost:8299/v1"
+LLM_MODEL = "Qwen2.5-3B-Instruct"
 
 # TODO 1: 撰寫 EXTRACTION_PROMPT — 讓 LLM 從語料中抽取三元組
 # 這個 prompt 需要：

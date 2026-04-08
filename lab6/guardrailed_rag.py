@@ -21,8 +21,8 @@ from neo4j import GraphDatabase
 
 # ------- env & clients -------
 os.environ["OPENAI_API_KEY"] = "EMPTY"
-os.environ["OPENAI_API_BASE"] = "http://localhost:8000/v1"
-LLM_MODEL = "Qwen/Qwen1.5-7B-Chat"
+os.environ["OPENAI_API_BASE"] = "http://localhost:8299/v1"
+LLM_MODEL = "Qwen2.5-3B-Instruct"
 llm = ChatOpenAI(model=LLM_MODEL, temperature=0)
 
 emb = HuggingFaceEmbeddings(
