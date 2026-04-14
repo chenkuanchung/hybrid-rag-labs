@@ -28,8 +28,24 @@ LLM_MODEL = "Qwen2.5-3B-Instruct"
 #   - 提供中文關鍵詞到英文關係的對應提示（例如「策略聯盟」→ partners_with）
 # 可參考 docs/kg_triples.template.txt 了解五種句式的格式
 EXTRACTION_PROMPT = """
+你是一位嚴格的「知識圖譜抽取助手」。請從以下語料抽取出事實，並轉換為嚴格的英文三元組句子。
+警告：絕對不可以使用下方清單以外的動詞或句型！
+
+【唯五合法的句式】：
+1. [Person] works_at [Company]. 
+2. [Company] produces [Product]. 
+3. [Company] partners_with [Company]. 
+4. [Company] supplies [Product] to [Company]. 
+5. [Person] leads [Product]. 
+
+【格式糾正範例（非常重要）】：
+- 看到「A 和 B 是策略聯盟」，只能輸出：A partners_with B.
+- 看到「C 是 D 的產品經理」，只能輸出：C leads D.
+- 看到「E 提供 F 給 G」，只能輸出：E supplies F to G.
+
+【語料內容】
 __CORPUS__
-"""  # <-- 請擴充這個 prompt
+"""
 
 
 def load_corpus() -> str:
@@ -75,7 +91,16 @@ def filter_parsable(lines: list[str]) -> tuple[list[str], list[str]]:
     #   3. 若 parse 回傳 None → 加入 bad
     #   4. 回傳 (good, bad) 兩個 list
     good, bad = [], []
-    return good, bad  # <-- 請實作過濾邏輯
+    seen = set()
+    for line in lines:
+        parsed = parse(line) # 使用 triples_parse.py 的正則來驗證
+        if parsed:
+            if line not in seen:
+                good.append(line)
+                seen.add(line)
+        else:
+            bad.append(line)
+    return good, bad
 
 
 def main() -> None:
