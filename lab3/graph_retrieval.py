@@ -3,7 +3,7 @@ from typing import List
 from neo4j import GraphDatabase
 import requests
 
-driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j","password123"))
+driver = GraphDatabase.driver("bolt://localhost:17687", auth=("neo4j","password123"))
 
 def call_llm(messages):
     data = {
@@ -21,7 +21,20 @@ def call_llm(messages):
     return response_text
 
 def extract_entities(question:str)->List[str]:
-    system_prompt = "你是一位助手，請從使用者問題中找出人名、公司名或產品名，列成 Python list，不要包含重複或其他文字。回傳 JSON，例如：{\"entities\":[\"Alice\",\"Acme\"]}"
+    system_prompt = """你是一位助手，請從使用者問題中找出人名、公司名或產品名，列成 Python list，不要包含重複或其他文字。回傳 JSON，例如：{"entities":["Alice","Acme"]}。
+    
+    範例 1：
+    問題：Carol 和 Acme 有什麼關係？
+    回傳：{"entities":["Carol","Acme"]}
+    
+    範例 2：
+    問題：這家公司有什麼產品？
+    回傳：{"entities":[]}
+    
+    範例 3：
+    問題：誰負責 TurboMotor？
+    回傳：{"entities":["TurboMotor"]}
+    """
     user_prompt = f"問題：{question}"
     messages = [
         {"role": "system", "content": system_prompt},
@@ -41,7 +54,12 @@ def fetch_subgraph(entities:List[str], max_hop:int=2):
     #   - MATCH p=(n)-[*1..max_hop]-(m)   ← 用 .format(k=max_hop) 嵌入 hop 數
     #   - WHERE n.name IN $ents
     #   - RETURN p LIMIT 50
-    query = ""  # <-- 請撰寫 Cypher 查詢
+    query = """
+    MATCH p=(n)-[*1..{k}]-(m)
+    WHERE n.name IN $ents
+    RETURN p LIMIT 50
+    """.format(k=max_hop)
+
     with driver.session() as s:
         records=s.run(query,ents=entities)
         triples=[]
@@ -56,7 +74,19 @@ def qa_graph(question:str):
     context="\n".join(triples) if triples else "（查無相關圖譜）"
     # TODO 2: 撰寫 prompt，將圖譜三元組（context）當作上下文，讓 LLM 根據這些關係回答問題
     # 提示：prompt 應包含：(1) 已知的圖譜關係 (2) 使用者的問題 (3) 要求 LLM 根據上下文回答
-    prompt = ""  # <-- 請撰寫你的 prompt（用 f-string 嵌入 context 和 question）
+    prompt = f"""
+    你是一位企業知識專家，請「嚴格」根據以下的圖譜關係（格式為 (頭)-[關係]->(尾)）回答問題。
+    絕對不可以編造資訊。
+
+    【已知圖譜關係】
+    {context}
+
+    【使用者問題】
+    {question}
+
+    請先逐步分析這兩個實體中間透過哪個節點連結，然後再給出最終繁體中文答案：
+    """
+    
     messages = [
         {"role": "user", "content": prompt}
     ]
