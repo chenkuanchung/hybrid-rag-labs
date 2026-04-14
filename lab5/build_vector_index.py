@@ -33,9 +33,25 @@ def main() -> None:
     #   2. 呼叫 splitter.split_documents(docs) 取得 splits
     #   3. 用 Chroma.from_documents(splits, emb, persist_directory=str(CHROMA_DIR)) 存入向量庫
     # 提示：與 Lab 1 的做法相同
-    splits = []  # <-- 請替換
+    # 1. 建立切割器
+    splitter = SemanticChunker(
+        emb, 
+        breakpoint_threshold_type="percentile", 
+        breakpoint_threshold_amount=90
+    )
+    
+    # 2. 進行切塊
+    splits = splitter.split_documents(docs) 
+    
     print(f"載入 {len(docs)} 個檔案 → SemanticChunker 產生 {len(splits)} 個 chunk")
-    # <-- 請加入 Chroma.from_documents(...) 呼叫
+    
+    # 3. 存入向量庫 Chroma
+    Chroma.from_documents(
+        documents=splits, 
+        embedding=emb, 
+        persist_directory=str(CHROMA_DIR)
+    )
+    
     print(f"已寫入：{CHROMA_DIR}")
 
 
